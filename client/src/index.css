@@ -1,0 +1,209 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(0 0% 100%);
+  --foreground: hsl(210 25% 7.8431%);
+  --card: hsl(0 0% 100%);
+  --card-foreground: hsl(210 25% 7.8431%);
+  --popover: hsl(0 0% 100%);
+  --popover-foreground: hsl(210 25% 7.8431%);
+  --primary: hsl(24 95% 53%);
+  --primary-foreground: hsl(0 0% 100%);
+  --secondary: hsl(218 54% 20%);
+  --secondary-foreground: hsl(0 0% 100%);
+  --muted: hsl(210 40% 98%);
+  --muted-foreground: hsl(215 16% 47%);
+  --accent: hsl(24 95% 53%);
+  --accent-foreground: hsl(0 0% 100%);
+  --destructive: hsl(0 84% 60%);
+  --destructive-foreground: hsl(0 0% 100%);
+  --border: hsl(214 32% 91%);
+  --input: hsl(214 32% 91%);
+  --ring: hsl(24 95% 53%);
+  --chart-1: hsl(24 95% 53%);
+  --chart-2: hsl(218 54% 20%);
+  --chart-3: hsl(43 74% 66%);
+  --chart-4: hsl(27 87% 67%);
+  --chart-5: hsl(340 75% 55%);
+  --sidebar: hsl(0 0% 100%);
+  --sidebar-foreground: hsl(210 25% 7.8431%);
+  --sidebar-primary: hsl(24 95% 53%);
+  --sidebar-primary-foreground: hsl(0 0% 100%);
+  --sidebar-accent: hsl(210 40% 98%);
+  --sidebar-accent-foreground: hsl(24 95% 53%);
+  --sidebar-border: hsl(214 32% 91%);
+  --sidebar-ring: hsl(24 95% 53%);
+  --font-sans: 'Inter', sans-serif;
+  --font-serif: Georgia, serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --radius: 0.75rem;
+  
+  /* AceleraFit Brand Colors */
+  --acelera-blue: hsl(218 54% 20%);
+  --acelera-orange: hsl(24 95% 53%);
+  --acelera-blue-light: hsl(218 54% 35%);
+  --acelera-orange-light: hsl(24 95% 65%);
+}
+
+.dark {
+  --background: hsl(0 0% 3.9%);
+  --foreground: hsl(0 0% 98%);
+  --card: hsl(0 0% 3.9%);
+  --card-foreground: hsl(0 0% 98%);
+  --popover: hsl(0 0% 3.9%);
+  --popover-foreground: hsl(0 0% 98%);
+  --primary: hsl(24 95% 53%);
+  --primary-foreground: hsl(0 0% 100%);
+  --secondary: hsl(0 0% 14.9%);
+  --secondary-foreground: hsl(0 0% 98%);
+  --muted: hsl(0 0% 14.9%);
+  --muted-foreground: hsl(0 0% 63.9%);
+  --accent: hsl(24 95% 53%);
+  --accent-foreground: hsl(0 0% 98%);
+  --destructive: hsl(0 84% 60%);
+  --destructive-foreground: hsl(0 0% 98%);
+  --border: hsl(0 0% 14.9%);
+  --input: hsl(0 0% 14.9%);
+  --ring: hsl(24 95% 53%);
+  --chart-1: hsl(24 95% 53%);
+  --chart-2: hsl(218 54% 20%);
+  --chart-3: hsl(43 74% 66%);
+  --chart-4: hsl(27 87% 67%);
+  --chart-5: hsl(340 75% 55%);
+  --sidebar: hsl(0 0% 3.9%);
+  --sidebar-foreground: hsl(0 0% 98%);
+  --sidebar-primary: hsl(24 95% 53%);
+  --sidebar-primary-foreground: hsl(0 0% 100%);
+  --sidebar-accent: hsl(0 0% 14.9%);
+  --sidebar-accent-foreground: hsl(0 0% 98%);
+  --sidebar-border: hsl(0 0% 14.9%);
+  --sidebar-ring: hsl(24 95% 53%);
+  
+  /* AceleraFit Brand Colors - Dark Mode */
+  --acelera-blue: hsl(218 54% 35%);
+  --acelera-orange: hsl(24 95% 60%);
+  --acelera-blue-light: hsl(218 54% 50%);
+  --acelera-orange-light: hsl(24 95% 70%);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-gray-50 text-foreground;
+  }
+}
+
+/* AceleraFit Brand Colors */
+.bg-acelera-blue {
+  background-color: var(--acelera-blue);
+}
+
+.bg-acelera-orange {
+  background-color: var(--acelera-orange);
+}
+
+.bg-acelera-blue-light {
+  background-color: var(--acelera-blue-light);
+}
+
+.bg-acelera-orange-light {
+  background-color: var(--acelera-orange-light);
+}
+
+.text-acelera-blue {
+  color: var(--acelera-blue);
+}
+
+.text-acelera-orange {
+  color: var(--acelera-orange);
+}
+
+.text-acelera-blue-light {
+  color: var(--acelera-blue-light);
+}
+
+.text-acelera-orange-light {
+  color: var(--acelera-orange-light);
+}
+
+.border-acelera-blue {
+  border-color: var(--acelera-blue);
+}
+
+.border-acelera-orange {
+  border-color: var(--acelera-orange);
+}
+
+/* Mobile-first optimizations */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Mobile layout optimizations */
+@media (max-width: 768px) {
+  .max-w-7xl {
+    max-width: 100% !important;
+  }
+  
+  .container {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+  
+  /* Improve touch targets */
+  button, .btn, [role="button"], .cursor-pointer {
+    min-height: 44px;
+  }
+  
+  /* Better card spacing on mobile */
+  .mobile-card-spacing > * + * {
+    margin-top: 1rem;
+  }
+  
+  /* Hide desktop-only elements */
+  .desktop-only {
+    display: none !important;
+  }
+  
+  /* Larger text for mobile readability */
+  .mobile-text-lg {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+  
+  /* Better scrolling on iOS */
+  .scrollable {
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Hide scrollbars but keep functionality */
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Optimize grid for mobile */
+  .mobile-grid-1 {
+    grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+  }
+  
+  .mobile-grid-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}

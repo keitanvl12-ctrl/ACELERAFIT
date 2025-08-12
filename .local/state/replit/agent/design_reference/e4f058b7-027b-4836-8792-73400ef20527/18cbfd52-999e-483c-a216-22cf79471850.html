@@ -1,0 +1,666 @@
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitTrain - Plataforma de Treinos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                colors: {
+                    'primary': '#EF4444',
+                    'secondary': '#1F2937',
+                    'accent': '#10B981',
+                }
+            }
+        }
+    };
+    </script>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- @COMPONENT: Header [navigation and user profile] -->
+    <header class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-2xl font-bold text-primary">FitTrain</h1>
+                    </div>
+                    <nav class="hidden md:ml-10 md:flex space-x-8">
+                        <a href="#dashboard" class="text-gray-900 font-medium border-b-2 border-primary pb-1">Dashboard</a>
+                        <a href="#workouts" class="text-gray-500 hover:text-gray-900">Treinos</a>
+                        <a href="#calendar" class="text-gray-500 hover:text-gray-900">Calendário</a>
+                        <a href="#marketplace" class="text-gray-500 hover:text-gray-900">Marketplace</a>
+                        <a href="#progress" class="text-gray-500 hover:text-gray-900">Progresso</a>
+                    </nav>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="text-gray-500 hover:text-gray-900">
+                        <i class="fas fa-bell text-xl"></i>
+                    </button>
+                    <div class="flex items-center space-x-2">
+                        <!-- Professional athlete portrait -->
+                        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&h=100" alt="User Avatar" class="w-10 h-10 rounded-full" data-mock="true">
+                        <span class="text-gray-900 font-medium" data-bind="user.name">João Silva</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- @END_COMPONENT: Header -->
+
+    <!-- @COMPONENT: MobileNavigation [bottom navigation for mobile] -->
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-40">
+        <div class="flex justify-around py-2">
+            <a href="#dashboard" class="flex flex-col items-center py-2 text-primary">
+                <i class="fas fa-home text-xl"></i>
+                <span class="text-xs mt-1">Início</span>
+            </a>
+            <a href="#workouts" class="flex flex-col items-center py-2 text-gray-500">
+                <i class="fas fa-dumbbell text-xl"></i>
+                <span class="text-xs mt-1">Treinos</span>
+            </a>
+            <a href="#calendar" class="flex flex-col items-center py-2 text-gray-500">
+                <i class="fas fa-calendar text-xl"></i>
+                <span class="text-xs mt-1">Agenda</span>
+            </a>
+            <a href="#marketplace" class="flex flex-col items-center py-2 text-gray-500">
+                <i class="fas fa-store text-xl"></i>
+                <span class="text-xs mt-1">Loja</span>
+            </a>
+            <a href="#progress" class="flex flex-col items-center py-2 text-gray-500">
+                <i class="fas fa-chart-line text-xl"></i>
+                <span class="text-xs mt-1">Progresso</span>
+            </a>
+        </div>
+    </nav>
+    <!-- @END_COMPONENT: MobileNavigation -->
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-20 md:pb-8">
+        <!-- @COMPONENT: DashboardOverview [main dashboard with stats and quick actions] -->
+        <div class="mb-8">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <h2 class="text-3xl font-bold text-gray-900">Bem-vindo de volta!</h2>
+                    <p class="text-gray-600">Vamos continuar sua jornada fitness</p>
+                </div>
+                <button class="bg-primary text-white px-6 py-3 rounded-lg font-medium hover:bg-red-600 transition-colors">
+                    <i class="fas fa-plus mr-2"></i>Novo Treino
+                </button>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                    <div class="flex items-center">
+                        <div class="bg-primary/10 p-3 rounded-lg">
+                            <i class="fas fa-fire text-primary text-xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-gray-600 text-sm">Treinos Hoje</p>
+                            <p class="text-2xl font-bold text-gray-900" data-bind="stats.todayWorkouts">3</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                    <div class="flex items-center">
+                        <div class="bg-accent/10 p-3 rounded-lg">
+                            <i class="fas fa-trophy text-accent text-xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-gray-600 text-sm">Sequência</p>
+                            <p class="text-2xl font-bold text-gray-900" data-bind="stats.streak">12 dias</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                    <div class="flex items-center">
+                        <div class="bg-blue-100 p-3 rounded-lg">
+                            <i class="fas fa-weight-hanging text-blue-600 text-xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-gray-600 text-sm">Peso Atual</p>
+                            <p class="text-2xl font-bold text-gray-900" data-bind="stats.currentWeight">75.2kg</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                    <div class="flex items-center">
+                        <div class="bg-purple-100 p-3 rounded-lg">
+                            <i class="fas fa-star text-purple-600 text-xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-gray-600 text-sm">Ranking</p>
+                            <p class="text-2xl font-bold text-gray-900" data-bind="stats.ranking">#24</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- @END_COMPONENT: DashboardOverview -->
+
+        <!-- @COMPONENT: TodayWorkouts [today's scheduled workouts] -->
+        <div class="mb-8">
+            <h3 class="text-xl font-bold text-gray-900 mb-4">Treinos de Hoje</h3>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- @MAP: todayWorkouts.map(workout => ( -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200" data-mock="true">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center">
+                            <div class="bg-primary/10 p-2 rounded-lg mr-3">
+                                <i class="fas fa-dumbbell text-primary"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900" data-bind="workout.name">Treino de Peito</h4>
+                                <p class="text-gray-600 text-sm" data-bind="workout.duration">45 min</p>
+                            </div>
+                        </div>
+                        <span class="bg-accent text-white text-xs px-2 py-1 rounded-full" data-bind="workout.status">Agendado</span>
+                    </div>
+                    <div class="mb-4">
+                        <div class="flex items-center justify-between text-sm text-gray-600 mb-2">
+                            <span>Progresso</span>
+                            <span data-bind="workout.progress">0/8 exercícios</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-primary h-2 rounded-full" style="width: 0%" data-bind="workout.progressPercent"></div>
+                        </div>
+                    </div>
+                    <button class="w-full bg-primary text-white py-2 rounded-lg font-medium hover:bg-red-600 transition-colors" data-event="click:startWorkout">
+                        Iniciar Treino
+                    </button>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200" data-mock="true">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center">
+                            <div class="bg-accent/10 p-2 rounded-lg mr-3">
+                                <i class="fas fa-running text-accent"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900">Cardio HIIT</h4>
+                                <p class="text-gray-600 text-sm">30 min</p>
+                            </div>
+                        </div>
+                        <span class="bg-yellow-500 text-white text-xs px-2 py-1 rounded-full">Em Progresso</span>
+                    </div>
+                    <div class="mb-4">
+                        <div class="flex items-center justify-between text-sm text-gray-600 mb-2">
+                            <span>Progresso</span>
+                            <span>3/5 exercícios</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-accent h-2 rounded-full" style="width: 60%"></div>
+                        </div>
+                    </div>
+                    <button class="w-full bg-accent text-white py-2 rounded-lg font-medium hover:bg-emerald-600 transition-colors">
+                        Continuar Treino
+                    </button>
+                </div>
+                <!-- @END_MAP )) -->
+            </div>
+        </div>
+        <!-- @END_COMPONENT: TodayWorkouts -->
+
+        <!-- @COMPONENT: WeeklyCalendar [calendar view of weekly workouts] -->
+        <div class="mb-8">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-xl font-bold text-gray-900">Calendário Semanal</h3>
+                <div class="flex items-center space-x-2">
+                    <button class="p-2 hover:bg-gray-100 rounded-lg">
+                        <i class="fas fa-chevron-left text-gray-600"></i>
+                    </button>
+                    <span class="text-gray-900 font-medium" data-bind="calendar.currentWeek">15-21 Jan 2024</span>
+                    <button class="p-2 hover:bg-gray-100 rounded-lg">
+                        <i class="fas fa-chevron-right text-gray-600"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <div class="grid grid-cols-7 gap-0">
+                    <!-- @MAP: weekDays.map(day => ( -->
+                    <div class="p-4 border-r border-gray-200 last:border-r-0" data-mock="true">
+                        <div class="text-center">
+                            <p class="text-gray-600 text-xs font-medium uppercase" data-bind="day.name">SEG</p>
+                            <p class="text-lg font-semibold text-gray-900 mt-1" data-bind="day.date">15</p>
+                        </div>
+                        <div class="mt-3 space-y-1">
+                            <div class="bg-primary/10 text-primary text-xs px-2 py-1 rounded text-center">
+                                Peito
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-4 border-r border-gray-200 last:border-r-0" data-mock="true">
+                        <div class="text-center">
+                            <p class="text-gray-600 text-xs font-medium uppercase">TER</p>
+                            <p class="text-lg font-semibold text-gray-900 mt-1">16</p>
+                        </div>
+                        <div class="mt-3 space-y-1">
+                            <div class="bg-accent/10 text-accent text-xs px-2 py-1 rounded text-center">
+                                Cardio
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-4 border-r border-gray-200 last:border-r-0" data-mock="true">
+                        <div class="text-center">
+                            <p class="text-gray-600 text-xs font-medium uppercase">QUA</p>
+                            <p class="text-lg font-semibold text-gray-900 mt-1">17</p>
+                        </div>
+                        <div class="mt-3 space-y-1">
+                            <div class="bg-blue-100 text-blue-600 text-xs px-2 py-1 rounded text-center">
+                                Costas
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-4 border-r border-gray-200 last:border-r-0" data-mock="true">
+                        <div class="text-center">
+                            <p class="text-gray-600 text-xs font-medium uppercase">QUI</p>
+                            <p class="text-lg font-semibold text-gray-900 mt-1">18</p>
+                        </div>
+                        <div class="mt-3 space-y-1">
+                            <div class="bg-purple-100 text-purple-600 text-xs px-2 py-1 rounded text-center">
+                                Pernas
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-4 border-r border-gray-200 last:border-r-0" data-mock="true">
+                        <div class="text-center">
+                            <p class="text-gray-600 text-xs font-medium uppercase">SEX</p>
+                            <p class="text-lg font-semibold bg-primary text-white rounded-full w-8 h-8 flex items-center justify-center mx-auto mt-1">19</p>
+                        </div>
+                        <div class="mt-3 space-y-1">
+                            <div class="bg-yellow-100 text-yellow-600 text-xs px-2 py-1 rounded text-center">
+                                Ombros
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-4 border-r border-gray-200 last:border-r-0" data-mock="true">
+                        <div class="text-center">
+                            <p class="text-gray-600 text-xs font-medium uppercase">SÁB</p>
+                            <p class="text-lg font-semibold text-gray-900 mt-1">20</p>
+                        </div>
+                        <div class="mt-3 space-y-1">
+                            <div class="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded text-center">
+                                Descanso
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-4" data-mock="true">
+                        <div class="text-center">
+                            <p class="text-gray-600 text-xs font-medium uppercase">DOM</p>
+                            <p class="text-lg font-semibold text-gray-900 mt-1">21</p>
+                        </div>
+                        <div class="mt-3 space-y-1">
+                            <div class="bg-green-100 text-green-600 text-xs px-2 py-1 rounded text-center">
+                                Yoga
+                            </div>
+                        </div>
+                    </div>
+                    <!-- @END_MAP )) -->
+                </div>
+            </div>
+        </div>
+        <!-- @END_COMPONENT: WeeklyCalendar -->
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- @COMPONENT: RecentVideos [training videos section] -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-xl font-bold text-gray-900">Vídeos de Treino</h3>
+                    <a href="#videos" class="text-primary hover:text-red-600 font-medium text-sm">Ver todos</a>
+                </div>
+                <div class="space-y-4">
+                    <!-- @MAP: recentVideos.map(video => ( -->
+                    <div class="flex items-center space-x-4" data-mock="true">
+                        <div class="relative">
+                            <!-- High-intensity workout demonstration in a modern gym -->
+                            <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=120&h=80" alt="Training video thumbnail" class="w-20 h-14 rounded-lg object-cover">
+                            <div class="absolute inset-0 bg-black bg-opacity-40 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-play text-white text-lg"></i>
+                            </div>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-medium text-gray-900" data-bind="video.title">Supino Reto - Técnica Perfeita</h4>
+                            <p class="text-gray-600 text-sm" data-bind="video.duration">8:45 min</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-4" data-mock="true">
+                        <div class="relative">
+                            <!-- HIIT cardio workout session in fitness studio -->
+                            <img src="https://images.unsplash.com/photo-1549476464-37392f717541?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=120&h=80" alt="Cardio training video" class="w-20 h-14 rounded-lg object-cover">
+                            <div class="absolute inset-0 bg-black bg-opacity-40 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-play text-white text-lg"></i>
+                            </div>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-medium text-gray-900">HIIT Cardio Intenso</h4>
+                            <p class="text-gray-600 text-sm">12:30 min</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-4" data-mock="true">
+                        <div class="relative">
+                            <!-- Deadlift exercise demonstration with proper form -->
+                            <img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=120&h=80" alt="Deadlift training video" class="w-20 h-14 rounded-lg object-cover">
+                            <div class="absolute inset-0 bg-black bg-opacity-40 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-play text-white text-lg"></i>
+                            </div>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-medium text-gray-900">Levantamento Terra</h4>
+                            <p class="text-gray-600 text-sm">15:20 min</p>
+                        </div>
+                    </div>
+                    <!-- @END_MAP )) -->
+                </div>
+            </div>
+            <!-- @END_COMPONENT: RecentVideos -->
+
+            <!-- @COMPONENT: ProgressTracking [body metrics and progress] -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-xl font-bold text-gray-900">Progresso Corporal</h3>
+                    <button class="text-primary hover:text-red-600 font-medium text-sm">
+                        <i class="fas fa-plus mr-1"></i>Adicionar
+                    </button>
+                </div>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between py-3 border-b border-gray-100">
+                        <div class="flex items-center">
+                            <div class="bg-blue-100 p-2 rounded-lg mr-3">
+                                <i class="fas fa-weight text-blue-600"></i>
+                            </div>
+                            <div>
+                                <p class="font-medium text-gray-900">Peso</p>
+                                <p class="text-gray-600 text-sm">Última medição</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-semibold text-gray-900" data-bind="metrics.weight">75.2 kg</p>
+                            <p class="text-accent text-sm">-0.8 kg</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between py-3 border-b border-gray-100">
+                        <div class="flex items-center">
+                            <div class="bg-purple-100 p-2 rounded-lg mr-3">
+                                <i class="fas fa-percentage text-purple-600"></i>
+                            </div>
+                            <div>
+                                <p class="font-medium text-gray-900">Gordura Corporal</p>
+                                <p class="text-gray-600 text-sm">Bioimpedância</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-semibold text-gray-900" data-bind="metrics.bodyFat">12.5%</p>
+                            <p class="text-accent text-sm">-1.2%</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between py-3 border-b border-gray-100">
+                        <div class="flex items-center">
+                            <div class="bg-green-100 p-2 rounded-lg mr-3">
+                                <i class="fas fa-dumbbell text-green-600"></i>
+                            </div>
+                            <div>
+                                <p class="font-medium text-gray-900">Massa Muscular</p>
+                                <p class="text-gray-600 text-sm">Bioimpedância</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-semibold text-gray-900" data-bind="metrics.muscleMass">62.7 kg</p>
+                            <p class="text-accent text-sm">+0.5 kg</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between py-3">
+                        <div class="flex items-center">
+                            <div class="bg-yellow-100 p-2 rounded-lg mr-3">
+                                <i class="fas fa-tint text-yellow-600"></i>
+                            </div>
+                            <div>
+                                <p class="font-medium text-gray-900">Hidratação</p>
+                                <p class="text-gray-600 text-sm">Bioimpedância</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-semibold text-gray-900" data-bind="metrics.hydration">58.3%</p>
+                            <p class="text-red-500 text-sm">-2.1%</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- @END_COMPONENT: ProgressTracking -->
+        </div>
+
+        <!-- @COMPONENT: MarketplacePreview [trainer marketplace section] -->
+        <div class="mt-8">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <h3 class="text-xl font-bold text-gray-900">Marketplace de Treinos</h3>
+                    <p class="text-gray-600">Encontre treinos criados por personal trainers profissionais</p>
+                </div>
+                <a href="#marketplace" class="bg-primary text-white px-6 py-3 rounded-lg font-medium hover:bg-red-600 transition-colors">
+                    Ver Marketplace
+                </a>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- @MAP: featuredWorkouts.map(workout => ( -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden" data-mock="true">
+                    <div class="relative">
+                        <!-- Professional personal trainer demonstrating exercise technique -->
+                        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=250" alt="Workout plan preview" class="w-full h-48 object-cover">
+                        <div class="absolute top-4 left-4 bg-primary text-white px-3 py-1 rounded-full text-sm font-medium">
+                            Bestseller
+                        </div>
+                        <div class="absolute top-4 right-4 bg-black bg-opacity-50 text-white px-2 py-1 rounded text-sm">
+                            R$ 49,90
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-3">
+                            <!-- Fitness instructor profile photo -->
+                            <img src="https://pixabay.com/get/gc0ea620160c45128fc1dc3b6b47cfbb4c9fb8b430746823fc26807c216d7c508354965e8856976144df8716da3b549b6c11d2d7e3e037baa76f23a6660f58d59_1280.jpg" alt="Trainer profile" class="w-8 h-8 rounded-full mr-2">
+                            <span class="text-gray-600 text-sm" data-bind="workout.trainer">Carlos Personal</span>
+                        </div>
+                        <h4 class="font-semibold text-gray-900 mb-2" data-bind="workout.title">Hipertrofia Avançada</h4>
+                        <p class="text-gray-600 text-sm mb-4" data-bind="workout.description">Programa completo de 12 semanas para ganho de massa muscular</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center text-yellow-500">
+                                <i class="fas fa-star"></i>
+                                <span class="ml-1 text-gray-600 text-sm" data-bind="workout.rating">4.8 (124)</span>
+                            </div>
+                            <span class="text-gray-600 text-sm" data-bind="workout.duration">12 semanas</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden" data-mock="true">
+                    <div class="relative">
+                        <!-- HIIT training class in modern fitness studio -->
+                        <img src="https://images.unsplash.com/photo-1549476464-37392f717541?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=250" alt="HIIT workout plan" class="w-full h-48 object-cover">
+                        <div class="absolute top-4 left-4 bg-accent text-white px-3 py-1 rounded-full text-sm font-medium">
+                            Novo
+                        </div>
+                        <div class="absolute top-4 right-4 bg-black bg-opacity-50 text-white px-2 py-1 rounded text-sm">
+                            R$ 29,90
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-3">
+                            <!-- Female fitness coach profile -->
+                            <img src="https://pixabay.com/get/g1e460f47efcab804413abbc5d12feb9cc83c39c1f58ae77496a3c5b5ba647e6d9611d93a9039ee01c2afd9947a45fe9ee1c096672776de0d939046dba1bf7f11_1280.jpg" alt="Female trainer" class="w-8 h-8 rounded-full mr-2">
+                            <span class="text-gray-600 text-sm">Ana Fitness</span>
+                        </div>
+                        <h4 class="font-semibold text-gray-900 mb-2">HIIT Queima Gordura</h4>
+                        <p class="text-gray-600 text-sm mb-4">Treinos intensivos de alta intensidade para emagrecimento rápido</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center text-yellow-500">
+                                <i class="fas fa-star"></i>
+                                <span class="ml-1 text-gray-600 text-sm">4.9 (89)</span>
+                            </div>
+                            <span class="text-gray-600 text-sm">8 semanas</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden" data-mock="true">
+                    <div class="relative">
+                        <!-- Yoga and flexibility training session -->
+                        <img src="https://pixabay.com/get/gb32fd676a7aa33fc53f3da483c7c91143c01bea0ce4186847a8c31a7e0c16862e9d3de68c997824840fa01dbef4c656f401eddd73458b4a5b0f1c8701f487366_1280.jpg" alt="Yoga workout plan" class="w-full h-48 object-cover">
+                        <div class="absolute top-4 right-4 bg-black bg-opacity-50 text-white px-2 py-1 rounded text-sm">
+                            R$ 19,90
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-3">
+                            <!-- Yoga instructor in peaceful setting -->
+                            <img src="https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=50&h=50" alt="Yoga instructor" class="w-8 h-8 rounded-full mr-2">
+                            <span class="text-gray-600 text-sm">Marina Zen</span>
+                        </div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Yoga & Flexibilidade</h4>
+                        <p class="text-gray-600 text-sm mb-4">Sequências de yoga para iniciantes e intermediários</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center text-yellow-500">
+                                <i class="fas fa-star"></i>
+                                <span class="ml-1 text-gray-600 text-sm">4.7 (156)</span>
+                            </div>
+                            <span class="text-gray-600 text-sm">6 semanas</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- @END_MAP )) -->
+            </div>
+        </div>
+        <!-- @END_COMPONENT: MarketplacePreview -->
+
+        <!-- @COMPONENT: RankingSection [user progress ranking] -->
+        <div class="mt-8 bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <h3 class="text-xl font-bold text-gray-900">Ranking de Progresso</h3>
+                    <p class="text-gray-600">Veja como você está se saindo comparado a outros usuários</p>
+                </div>
+                <select class="border border-gray-300 rounded-lg px-3 py-2 text-sm">
+                    <option>Esta semana</option>
+                    <option>Este mês</option>
+                    <option>Este ano</option>
+                </select>
+            </div>
+            <div class="space-y-4">
+                <!-- @MAP: rankingData.map((user, index) => ( -->
+                <div class="flex items-center justify-between py-3 border-b border-gray-100 last:border-b-0" data-mock="true">
+                    <div class="flex items-center">
+                        <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm mr-4">
+                            24
+                        </div>
+                        <!-- Profile photo of fitness enthusiast -->
+                        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=50&h=50" alt="User profile" class="w-10 h-10 rounded-full mr-3">
+                        <div>
+                            <p class="font-medium text-gray-900" data-bind="user.name">João Silva (Você)</p>
+                            <p class="text-gray-600 text-sm" data-bind="user.workoutsCompleted">42 treinos completados</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <p class="font-semibold text-gray-900" data-bind="user.points">1,245 pts</p>
+                        <p class="text-accent text-sm">+89 esta semana</p>
+                    </div>
+                </div>
+                <div class="flex items-center justify-between py-3 border-b border-gray-100 last:border-b-0" data-mock="true">
+                    <div class="flex items-center">
+                        <div class="w-8 h-8 rounded-full bg-yellow-500 text-white flex items-center justify-center font-bold text-sm mr-4">
+                            1
+                        </div>
+                        <!-- Athletic person celebrating fitness achievement -->
+                        <img src="https://pixabay.com/get/g551274b14d4ca0b78e516fe777af4e16a14e4b87f1d733d17270269500399cf76156184a60234e7195370e89ac363a03c9b98fda339ef5e4b18cbe59d0b88594_1280.jpg" alt="Top ranked user" class="w-10 h-10 rounded-full mr-3">
+                        <div>
+                            <p class="font-medium text-gray-900">Carlos Fitness</p>
+                            <p class="text-gray-600 text-sm">68 treinos completados</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <p class="font-semibold text-gray-900">2,890 pts</p>
+                        <p class="text-accent text-sm">+156 esta semana</p>
+                    </div>
+                </div>
+                <!-- @END_MAP )) -->
+            </div>
+            <div class="mt-6 text-center">
+                <button class="text-primary hover:text-red-600 font-medium">Ver ranking completo</button>
+            </div>
+        </div>
+        <!-- @END_COMPONENT: RankingSection -->
+    </div>
+
+    <script>
+        // TODO: Implement real data fetching and state management
+        (function() {
+            // Mock data for demonstration
+            const mockData = {
+                stats: {
+                    todayWorkouts: 3,
+                    streak: "12 dias",
+                    currentWeight: "75.2kg",
+                    ranking: "#24"
+                },
+                user: {
+                    name: "João Silva"
+                }
+            };
+
+            // Simple navigation handler
+            function handleNavigation(event) {
+                const links = document.querySelectorAll('nav a');
+                links.forEach(link => {
+                    link.classList.remove('text-gray-900', 'font-medium', 'border-b-2', 'border-primary', 'pb-1');
+                    link.classList.add('text-gray-500', 'hover:text-gray-900');
+                });
+                
+                event.target.classList.remove('text-gray-500', 'hover:text-gray-900');
+                event.target.classList.add('text-gray-900', 'font-medium', 'border-b-2', 'border-primary', 'pb-1');
+            }
+
+            // Add click listeners to navigation
+            document.querySelectorAll('nav a').forEach(link => {
+                link.addEventListener('click', handleNavigation);
+            });
+
+            // Mobile navigation handler
+            document.querySelectorAll('.md\\:hidden nav a').forEach(link => {
+                link.addEventListener('click', function(event) {
+                    const mobileLinks = document.querySelectorAll('.md\\:hidden nav a');
+                    mobileLinks.forEach(mLink => {
+                        mLink.classList.remove('text-primary');
+                        mLink.classList.add('text-gray-500');
+                    });
+                    
+                    event.target.closest('a').classList.remove('text-gray-500');
+                    event.target.closest('a').classList.add('text-primary');
+                });
+            });
+
+            // Simulate workout progress updates
+            function updateWorkoutProgress() {
+                const progressBars = document.querySelectorAll('[data-bind*="progressPercent"]');
+                progressBars.forEach(bar => {
+                    const randomProgress = Math.floor(Math.random() * 100);
+                    bar.style.width = randomProgress + '%';
+                });
+            }
+
+            // Button click handlers for demonstration
+            document.querySelectorAll('button[data-event*="click"]').forEach(button => {
+                button.addEventListener('click', function() {
+                    // TODO: Implement actual workout start/continue logic
+                    console.log('Button clicked:', this.textContent);
+                });
+            });
+
+            // Initialize tooltips and other interactive elements
+            function initializeInteractiveElements() {
+                // TODO: Add tooltip initialization
+                // TODO: Add modal handlers
+                // TODO: Add form validation
+            }
+
+            // Call initialization functions
+            initializeInteractiveElements();
+        })();
+    </script>
+</body>
+</html>
